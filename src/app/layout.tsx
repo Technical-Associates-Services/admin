@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "TAS Admin Dashboard",
   description: "Premium dashboard for TAS management",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
