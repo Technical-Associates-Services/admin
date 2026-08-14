@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 
-export function PluginForm({ isOpen, onClose, item, onSuccess }) {
+export function PluginForm({ isOpen, onClose, item, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
   const [formData, setFormData] = useState({
     title: '', code: '', type: 'custom', tag_type: 'head', status: 1
   });
@@ -28,9 +28,9 @@ export function PluginForm({ isOpen, onClose, item, onSuccess }) {
     }
   }, [isOpen, item]);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {

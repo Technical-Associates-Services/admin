@@ -46,12 +46,12 @@ export default function CategoriesPage() {
     setIsFormOpen(true);
   };
 
-  const handleEdit = (category) => {
+  const handleEdit = (category: any) => {
     setSelectedCategory(category);
     setIsFormOpen(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: any) => {
     if (confirm('Are you sure you want to delete this category?')) {
       try {
         await api.delete(`/admin/categories/${id}`);
@@ -104,7 +104,7 @@ export default function CategoriesPage() {
                         </TableCell>
                       </TableRow>
                     ) : (
-                      categories.map((category) => (
+                      categories.map((category: any) => (
                         <TableRow key={category.slug}>
                           <TableCell>
                             <div className="w-10 h-10 rounded-md overflow-hidden bg-zinc-100 flex items-center justify-center border">

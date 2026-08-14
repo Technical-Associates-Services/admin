@@ -46,12 +46,12 @@ export default function ProductsPage() {
     setIsFormOpen(true);
   };
 
-  const handleEdit = (product) => {
+  const handleEdit = (product: any) => {
     setSelectedProduct(product);
     setIsFormOpen(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: any) => {
     if (confirm('Are you sure you want to delete this product?')) {
       try {
         await api.delete(`/admin/products/${id}`);
@@ -104,7 +104,7 @@ export default function ProductsPage() {
                         </TableCell>
                       </TableRow>
                     ) : (
-                      products.map((product) => (
+                      products.map((product: any) => (
                         <TableRow key={product.slug}>
                           <TableCell>
                             <div className="w-10 h-10 rounded-md overflow-hidden bg-zinc-100 flex items-center justify-center border">

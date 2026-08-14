@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 
-export function BrandForm({ isOpen, onClose, brand, onSuccess }) {
+export function BrandForm({ isOpen, onClose, brand, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
   const [formData, setFormData] = useState({ title: '', slug: '', image: '', status: 1 });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -20,9 +20,9 @@ export function BrandForm({ isOpen, onClose, brand, onSuccess }) {
     }
   }, [isOpen, brand]);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleFileUpload = async (e) => {
+  const handleFileUpload = async (e: any) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
@@ -35,7 +35,7 @@ export function BrandForm({ isOpen, onClose, brand, onSuccess }) {
     } catch { alert('Upload failed'); } finally { setUploading(false); }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {

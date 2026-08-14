@@ -7,7 +7,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog';
 
-export function CategoryForm({ isOpen, onClose, category, onSuccess }) {
+export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
   const [formData, setFormData] = useState({
     title: '', slug: '', subtitle: '', description: '', image: ''
   });
@@ -32,9 +32,9 @@ export function CategoryForm({ isOpen, onClose, category, onSuccess }) {
     }
   }, [isOpen, category]);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleFileUpload = async (e) => {
+  const handleFileUpload = async (e: any) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
@@ -47,7 +47,7 @@ export function CategoryForm({ isOpen, onClose, category, onSuccess }) {
     } catch { alert('Upload failed'); } finally { setUploading(false); }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
@@ -58,7 +58,7 @@ export function CategoryForm({ isOpen, onClose, category, onSuccess }) {
       }
       onSuccess();
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Form submission failed', error);
       alert('Failed to save category');
     } finally { setIsSubmitting(false); }

@@ -11,7 +11,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 
-export function UserForm({ isOpen, onClose, user, onSuccess }) {
+export function UserForm({ isOpen, onClose, user, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -39,11 +39,11 @@ export function UserForm({ isOpen, onClose, user, onSuccess }) {
     }
   }, [isOpen, user]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
@@ -54,7 +54,7 @@ export function UserForm({ isOpen, onClose, user, onSuccess }) {
       }
       onSuccess();
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Form submission failed', error);
       alert('Failed to save user: ' + (error.response?.data?.error || 'Unknown error'));
     } finally {

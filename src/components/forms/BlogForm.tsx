@@ -11,7 +11,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 
-export function BlogForm({ isOpen, onClose, blog, onSuccess }) {
+export function BlogForm({ isOpen, onClose, blog, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -68,11 +68,11 @@ export function BlogForm({ isOpen, onClose, blog, onSuccess }) {
     }
   }, [isOpen, blog]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileUpload = async (e) => {
+  const handleFileUpload = async (e: any) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -86,7 +86,7 @@ export function BlogForm({ isOpen, onClose, blog, onSuccess }) {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setFormData({ ...formData, image: res.data.fileName });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Upload failed', error);
       alert('Upload failed. Please try again.');
     } finally {
@@ -94,7 +94,7 @@ export function BlogForm({ isOpen, onClose, blog, onSuccess }) {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
