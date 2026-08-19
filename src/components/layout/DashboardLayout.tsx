@@ -34,11 +34,11 @@ export const DashboardLayout = ({ children }: { children: React.ReactNode }) => 
     { name: 'Services', href: '/services', icon: Layers },
     { name: 'Solutions', href: '/solutions', icon: Layers },
     { name: 'Associates', href: '/associates', icon: Layers },
-    // { name: 'Sister Concerns', href: '/concerns', icon: Layers }, // Hidden: Per user request
+    { name: 'Sister Concerns', href: '/concerns', icon: Layers },
     { name: 'Banners', href: '/banners', icon: ImageIcon },
     { name: 'Testimonials', href: '/testimonials', icon: MessageSquare },
     { name: 'References', href: '/references', icon: Layers },
-    { name: 'Catalogues', href: '/catalogues', icon: FileText },
+    // { name: 'Catalogues', href: '/catalogues', icon: FileText }, // Hidden: Standalone catalogues page not in frontend
     { name: 'Contact Messages', href: '/contacts', icon: MessageSquare },
     { name: 'Enquiries', href: '/enquiries', icon: MessageSquare },
     // { name: 'Reviews', href: '/reviews', icon: MessageSquare }, // Hidden: Not used in frontend
