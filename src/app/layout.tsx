@@ -18,7 +18,12 @@ export const metadata: Metadata = {
   title: "TAS Admin Dashboard",
   description: "Premium dashboard for TAS management",
   icons: {
-    icon: "/logo.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon.png", type: "image/png", sizes: "192x192" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 
