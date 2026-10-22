@@ -10,7 +10,8 @@ import {
 export function ProductForm({ isOpen, onClose, product, onSuccess }: { isOpen: boolean; onClose: () => void; product?: any; onSuccess: () => void }) {
   const [formData, setFormData] = useState({
     title: '', slug: '', category_id: '', brand_id: '',
-    summary: '', description: '', price: '', stock: '', image: '', status: 1
+    summary: '', description: '', price: '', stock: '', image: '',
+    seo_title: '', seo_keyword: '', seo_description: '', status: 1
   });
   const [categories, setCategories] = useState<any[]>([]);
   const [brands, setBrands] = useState<any[]>([]);
@@ -44,10 +45,17 @@ export function ProductForm({ isOpen, onClose, product, onSuccess }: { isOpen: b
         price: product.price || '',
         stock: product.stock || '',
         image: product.image || '',
+        seo_title: product.seo_title || '',
+        seo_keyword: product.seo_keyword || '',
+        seo_description: product.seo_description || '',
         status: product.status ?? 1
       });
     } else {
-      setFormData({ title: '', slug: '', category_id: '', brand_id: '', summary: '', description: '', price: '', stock: '', image: '', status: 1 });
+      setFormData({
+        title: '', slug: '', category_id: '', brand_id: '',
+        summary: '', description: '', price: '', stock: '', image: '',
+        seo_title: '', seo_keyword: '', seo_description: '', status: 1
+      });
     }
   }, [isOpen, product]);
 
@@ -160,6 +168,24 @@ export function ProductForm({ isOpen, onClose, product, onSuccess }: { isOpen: b
                   <span className="text-xs text-green-600">{formData.image.split('/').pop()}</span>
                 </div>
               )}
+            </div>
+
+            {/* ── SEO Section ── */}
+            <div className="border-t pt-3 mt-2 space-y-3">
+              <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Search Engine Optimization (SEO)</Label>
+              <div className="grid gap-2">
+                <Label>SEO Title</Label>
+                <Input name="seo_title" value={formData.seo_title} onChange={handleChange} placeholder="e.g. Industrial Water Pumps in Nepal | TAS" />
+              </div>
+              <div className="grid gap-2">
+                <Label>SEO Keywords</Label>
+                <Input name="seo_keyword" value={formData.seo_keyword} onChange={handleChange} placeholder="water pumps nepal, industrial boiler, kathmandu" />
+              </div>
+              <div className="grid gap-2">
+                <Label>SEO Description</Label>
+                <textarea name="seo_description" value={formData.seo_description} onChange={handleChange} rows={2} placeholder="Meta description for Google search results (150-160 chars recommended)"
+                  className="flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none" />
+              </div>
             </div>
 
             <DialogFooter className="pt-2">

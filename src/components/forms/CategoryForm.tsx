@@ -9,7 +9,8 @@ import {
 
 export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
   const [formData, setFormData] = useState({
-    title: '', slug: '', subtitle: '', description: '', image: ''
+    title: '', slug: '', subtitle: '', description: '', image: '',
+    seo_title: '', seo_keywords: '', seo_description: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -24,10 +25,16 @@ export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen
           slug: category.slug || '',
           subtitle: category.subtitle || '',
           description: category.description || '',
-          image: category.image || ''
+          image: category.image || '',
+          seo_title: category.seo_title || '',
+          seo_keywords: category.seo_keywords || '',
+          seo_description: category.seo_description || ''
         });
       } else {
-        setFormData({ title: '', slug: '', subtitle: '', description: '', image: '' });
+        setFormData({
+          title: '', slug: '', subtitle: '', description: '', image: '',
+          seo_title: '', seo_keywords: '', seo_description: ''
+        });
       }
     }
   }, [isOpen, category]);
@@ -101,6 +108,25 @@ export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen
               </div>
             )}
           </div>
+
+          {/* ── SEO Section ── */}
+          <div className="border-t pt-3 mt-2 space-y-3">
+            <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Search Engine Optimization (SEO)</Label>
+            <div className="grid gap-2">
+              <Label htmlFor="seo_title">SEO Title</Label>
+              <Input id="seo_title" name="seo_title" value={formData.seo_title} onChange={handleChange} placeholder="e.g. Water Treatment & Waste Systems Nepal | TAS" />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="seo_keywords">SEO Keywords</Label>
+              <Input id="seo_keywords" name="seo_keywords" value={formData.seo_keywords} onChange={handleChange} placeholder="water treatment nepal, waste water plant, kathmandu" />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="seo_description">SEO Description</Label>
+              <textarea id="seo_description" name="seo_description" value={formData.seo_description} onChange={handleChange} rows={2} placeholder="Meta description for search results"
+                className="flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none" />
+            </div>
+          </div>
+
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
             <Button type="submit" disabled={isSubmitting || uploading}>
