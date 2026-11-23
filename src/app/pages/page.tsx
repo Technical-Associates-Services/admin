@@ -72,14 +72,14 @@ export default function PagesPage() {
                       <TableCell className="w-20">
                         <div className="w-12 h-12 rounded overflow-hidden">
                           {item.image ? (
-                            <img 
-                                src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/pages/${item.image}`) : '/logo.png'} 
-                                alt={item.title} 
-                                className="object-cover w-full h-full" 
-                                onError={(e) => {
-                                  e.currentTarget.src = '/logo.png';
-                                }} 
-                              />
+                            <img
+                              src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/pages/${item.image}`) : '/logo.png'}
+                              alt={item.title}
+                              className="object-cover w-full h-full"
+                              onError={(e) => {
+                                e.currentTarget.src = '/logo.png';
+                              }}
+                            />
                           ) : <div className="w-12 h-12 bg-zinc-100 dark:bg-zinc-800 rounded flex items-center justify-center text-xs text-muted-foreground">N/A</div>}
                         </div>
                       </TableCell>
@@ -98,11 +98,11 @@ export default function PagesPage() {
         </Card>
       </div>
 
-      <PageForm 
-        isOpen={isFormOpen} 
-        onClose={() => setIsFormOpen(false)} 
-        item={selected} 
-        onSuccess={fetchItems} 
+      <PageForm
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        item={selected}
+        onSuccess={fetchItems}
       />
     </DashboardLayout>
   );

@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 
-export function BannerForm({ isOpen, onClose, banner, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
+export function BannerForm({ isOpen, onClose, banner, onSuccess }: { isOpen: boolean; onClose: () => void; onSuccess: () => void;[key: string]: any }) {
   const [formData, setFormData] = useState({ title: '', subtitle: '', links: '', image: '', status: 1 });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);

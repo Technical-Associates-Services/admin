@@ -74,13 +74,13 @@ export default function ShopsPage() {
                       <TableCell>
                         {item.image ? (
                           <div className="w-12 h-12 overflow-hidden rounded">
-                            <img 
-                              src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/shops/${item.image}`) : '/logo.png'} 
-                              alt={item.title} 
-                              className="object-cover w-full h-full" 
+                            <img
+                              src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/shops/${item.image}`) : '/logo.png'}
+                              alt={item.title}
+                              className="object-cover w-full h-full"
                               onError={(e) => {
                                 e.currentTarget.src = '/logo.png';
-                              }} 
+                              }}
                             />
                           </div>
                         ) : <div className="w-12 h-12 bg-zinc-100 dark:bg-zinc-800 rounded flex items-center justify-center text-xs text-muted-foreground">N/A</div>}
@@ -100,11 +100,11 @@ export default function ShopsPage() {
         </Card>
       </div>
 
-      <ShopForm 
-        isOpen={isFormOpen} 
-        onClose={() => setIsFormOpen(false)} 
-        item={selected} 
-        onSuccess={fetchItems} 
+      <ShopForm
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        item={selected}
+        onSuccess={fetchItems}
       />
     </DashboardLayout>
   );

@@ -7,7 +7,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog';
 
-export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
+export function CategoryForm({ isOpen, onClose, category, onSuccess }: { isOpen: boolean; onClose: () => void; onSuccess: () => void;[key: string]: any }) {
   const [formData, setFormData] = useState({
     title: '', slug: '', subtitle: '', description: '', parent_category: '', image: '',
     seo_title: '', seo_keywords: '', seo_description: ''
