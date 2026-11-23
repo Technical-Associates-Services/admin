@@ -20,7 +20,7 @@ import { BannerForm } from '@/components/forms/BannerForm';
 export default function BannersPage() {
   const [banners, setBanners] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   // Modal state
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedBanner, setSelectedBanner] = useState<any>(null);
@@ -108,18 +108,13 @@ export default function BannersPage() {
                         <TableRow key={banner.id}>
                           <TableCell>
                             <div className="w-16 h-8 rounded-md overflow-hidden bg-zinc-100 flex items-center justify-center border">
-                              <img 
-                                src={banner.image ? (banner.image.startsWith('http') ? banner.image : `${process.env.NEXT_PUBLIC_API_URL}/frontend/images/banners/${banner.image}`) : '/logo.png'} 
-                                alt={banner.title} 
-                                className="object-cover w-full h-full" 
+                              <img
+                                src={banner.image ? (banner.image.startsWith('http') ? banner.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/banners/${banner.image}`) : '/logo.png'}
+                                alt={banner.title}
+                                className="object-cover w-full h-full"
                                 onError={(e) => {
-                                  if (!e.currentTarget.dataset.retried && banner.image && !banner.image.startsWith('http')) {
-                                    e.currentTarget.dataset.retried = "true";
-                                    e.currentTarget.src = `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/banners/${banner.image}`;
-                                  } else {
-                                    e.currentTarget.src = '/logo.png';
-                                  }
-                                }} 
+                                  e.currentTarget.src = '/logo.png';
+                                }}
                               />
                             </div>
                           </TableCell>
@@ -146,11 +141,11 @@ export default function BannersPage() {
       </div>
 
       {isFormOpen && (
-        <BannerForm 
-          isOpen={isFormOpen} 
-          onClose={() => setIsFormOpen(false)} 
-          banner={selectedBanner} 
-          onSuccess={fetchBanners} 
+        <BannerForm
+          isOpen={isFormOpen}
+          onClose={() => setIsFormOpen(false)}
+          banner={selectedBanner}
+          onSuccess={fetchBanners}
         />
       )}
     </DashboardLayout>

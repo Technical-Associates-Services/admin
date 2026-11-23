@@ -75,16 +75,11 @@ export default function ShopsPage() {
                         {item.image ? (
                           <div className="w-12 h-12 overflow-hidden rounded">
                             <img 
-                              src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL}/frontend/images/shops/${item.image}`) : '/logo.png'} 
+                              src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/shops/${item.image}`) : '/logo.png'} 
                               alt={item.title} 
                               className="object-cover w-full h-full" 
                               onError={(e) => {
-                                if (!e.currentTarget.dataset.retried && item.image && !item.image.startsWith('http')) {
-                                  e.currentTarget.dataset.retried = "true";
-                                  e.currentTarget.src = `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/shops/${item.image}`;
-                                } else {
-                                  e.currentTarget.src = '/logo.png';
-                                }
+                                e.currentTarget.src = '/logo.png';
                               }} 
                             />
                           </div>

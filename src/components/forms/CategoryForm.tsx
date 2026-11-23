@@ -9,22 +9,37 @@ import {
 
 export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen: boolean; onClose: () => void; onSuccess: () => void; [key: string]: any }) {
   const [formData, setFormData] = useState({
-    title: '', slug: '', subtitle: '', description: '', image: '',
+    title: '', slug: '', subtitle: '', description: '', parent_category: '', image: '',
     seo_title: '', seo_keywords: '', seo_description: ''
   });
+  const [parentOptions, setParentOptions] = useState<any[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const isEditing = !!category;
 
-  // Populate form when editing
+  // Populate form when editing and fetch parent category options
   useEffect(() => {
     if (isOpen) {
+      api.get('/categories')
+        .then(res => {
+          const raw = res.data.categories || [];
+          // Flatten categories for parent selection
+          const flat = (list: any[], depth = 0): any[] =>
+            list.flatMap(c => [
+              { id: c.id, title: ('— '.repeat(depth)) + c.title },
+              ...flat(c.subCategory || [], depth + 1)
+            ]);
+          setParentOptions(flat(raw).filter(c => !category || c.id !== category.id));
+        })
+        .catch(console.error);
+
       if (category) {
         setFormData({
           title: category.title || '',
           slug: category.slug || '',
           subtitle: category.subtitle || '',
           description: category.description || '',
+          parent_category: category.parent_category?.toString() || '',
           image: category.image || '',
           seo_title: category.seo_title || '',
           seo_keywords: category.seo_keywords || '',
@@ -32,7 +47,7 @@ export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen
         });
       } else {
         setFormData({
-          title: '', slug: '', subtitle: '', description: '', image: '',
+          title: '', slug: '', subtitle: '', description: '', parent_category: '', image: '',
           seo_title: '', seo_keywords: '', seo_description: ''
         });
       }
@@ -88,9 +103,26 @@ export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen
               <Input id="slug" name="slug" value={formData.slug} onChange={handleChange} placeholder="Auto-generated" />
             </div>
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="subtitle">Subtitle</Label>
-            <Input id="subtitle" name="subtitle" value={formData.subtitle} onChange={handleChange} />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="subtitle">Subtitle</Label>
+              <Input id="subtitle" name="subtitle" value={formData.subtitle} onChange={handleChange} />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="parent_category">Parent Category</Label>
+              <select
+                id="parent_category"
+                name="parent_category"
+                value={formData.parent_category}
+                onChange={handleChange}
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                <option value="">None (Root Category)</option>
+                {parentOptions.map(p => (
+                  <option key={p.id} value={p.id}>{p.title}</option>
+                ))}
+              </select>
+            </div>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="image">Category Image</Label>
@@ -99,7 +131,7 @@ export function CategoryForm({ isOpen, onClose, category, onSuccess  }: { isOpen
             {formData.image && (
               <div className="flex items-center gap-2 mt-1">
                 <img
-                  src={formData.image}
+                  src={formData.image.startsWith('http') ? formData.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/categories/${formData.image}`}
                   alt="preview"
                   className="w-12 h-12 object-cover rounded border"
                   onError={(e) => e.currentTarget.style.display = 'none'}

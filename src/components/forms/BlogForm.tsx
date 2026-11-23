@@ -31,20 +31,12 @@ export function BlogForm({ isOpen, onClose, blog, onSuccess  }: { isOpen: boolea
 
   const isEditing = !!blog;
 
-  // Fetch blog categories (since schema shows Blog depends on BlogCategory, let's try /categories or we'll map to regular categories for now)
-  // Let's assume there is a /blog-categories or similar, wait, looking at API_SPEC we might only have /categories
-  // Actually, we can just use an input or basic dropdown for now if we don't have a specific endpoint. 
-  // Wait, let's check what endpoints exist for blog categories... I will just fetch from /admin/categories for now and assume they can be used, or just default to 1.
+  // Fetch actual blog categories from /admin/blog-categories
   useEffect(() => {
     if (isOpen) {
-      // Just fetch regular categories as a fallback, or if backend has it. 
-      // It's just an integer in schema.
-      api.get('/categories')
+      api.get('/admin/blog-categories')
         .then(res => {
-           // Flatten tree
-           const flatCats = (cats: any[], depth = 0): any[] =>
-             cats.flatMap(c => [{ id: c.id, title: ('  '.repeat(depth)) + c.title }, ...flatCats(c.subCategory || [], depth + 1)]);
-           setCategories(flatCats(res.data.categories || []));
+          setCategories(res.data.categories || []);
         }).catch(console.error);
 
       if (blog) {
@@ -153,7 +145,7 @@ export function BlogForm({ isOpen, onClose, blog, onSuccess  }: { isOpen: boolea
             {formData.image && (
               <div className="flex items-center gap-2 mt-1">
                 <img
-                  src={formData.image.startsWith('http') ? formData.image : `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/blogs/${formData.image}`}
+                  src={formData.image.startsWith('http') ? formData.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/blogs/${formData.image}`}
                   alt="preview" className="w-16 h-16 object-cover rounded border"
                   onError={(e) => e.currentTarget.style.display = 'none'}
                 />

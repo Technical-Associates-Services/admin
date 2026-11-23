@@ -72,16 +72,11 @@ export default function BrandsPage() {
                           <TableCell>
                             <div className="w-10 h-10 rounded-md overflow-hidden bg-zinc-100 flex items-center justify-center border">
                               <img 
-                                src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL}/frontend/images/brands/${item.image}`) : '/logo.png'} 
+                                src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/brands/${item.image}`) : '/logo.png'} 
                                 alt={item.title} 
                                 className="object-cover w-full h-full" 
                                 onError={(e) => {
-                                  if (!e.currentTarget.dataset.retried && item.image && !item.image.startsWith('http')) {
-                                    e.currentTarget.dataset.retried = "true";
-                                    e.currentTarget.src = `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/brands/${item.image}`;
-                                  } else {
-                                    e.currentTarget.src = '/logo.png';
-                                  }
+                                  e.currentTarget.src = '/logo.png';
                                 }} 
                               />
                             </div>

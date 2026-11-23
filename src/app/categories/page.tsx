@@ -29,7 +29,13 @@ export default function CategoriesPage() {
     setIsLoading(true);
     try {
       const res = await api.get('/categories');
-      setCategories(res.data.categories || []);
+      const raw = res.data.categories || [];
+      const flatten = (items: any[], parentTitle = '', depth = 0): any[] =>
+        items.flatMap(c => [
+          { ...c, parentTitle, depth, displayTitle: depth > 0 ? `${'— '.repeat(depth)}${c.title}` : c.title },
+          ...flatten(c.subCategory || [], c.title, depth + 1)
+        ]);
+      setCategories(flatten(raw));
     } catch (error) {
       console.error("Failed to fetch categories", error);
     } finally {
@@ -105,25 +111,25 @@ export default function CategoriesPage() {
                       </TableRow>
                     ) : (
                       categories.map((category: any) => (
-                        <TableRow key={category.slug}>
+                        <TableRow key={category.id || category.slug}>
                           <TableCell>
                             <div className="w-10 h-10 rounded-md overflow-hidden bg-zinc-100 flex items-center justify-center border">
                               <img 
-                                src={category.image ? (category.image.startsWith('http') ? category.image : `${process.env.NEXT_PUBLIC_API_URL}/frontend/images/categories/${category.image}`) : '/logo.png'} 
+                                src={category.image ? (category.image.startsWith('http') ? category.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/categories/${category.image}`) : '/logo.png'} 
                                 alt={category.title} 
                                 className="object-cover w-full h-full" 
                                 onError={(e) => {
-                                  if (!e.currentTarget.dataset.retried && category.image && !category.image.startsWith('http')) {
-                                    e.currentTarget.dataset.retried = "true";
-                                    e.currentTarget.src = `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/categories/${category.image}`;
-                                  } else {
-                                    e.currentTarget.src = '/logo.png';
-                                  }
+                                  e.currentTarget.src = '/logo.png';
                                 }} 
                               />
                             </div>
                           </TableCell>
-                          <TableCell className="font-medium">{category.title}</TableCell>
+                          <TableCell className="font-medium">
+                            {category.displayTitle || category.title}
+                            {category.parentTitle && (
+                              <span className="block text-xs text-muted-foreground">in {category.parentTitle}</span>
+                            )}
+                          </TableCell>
                           <TableCell className="text-muted-foreground">{category.slug}</TableCell>
                           <TableCell>{category.subCategory?.length || 0} sub-items</TableCell>
                           <TableCell className="text-right space-x-2">

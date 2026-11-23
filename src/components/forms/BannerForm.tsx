@@ -78,7 +78,7 @@ export function BannerForm({ isOpen, onClose, banner, onSuccess  }: { isOpen: bo
             {formData.image && (
               <div className="flex items-center gap-2 mt-1">
                 <img
-                  src={formData.image.startsWith('http') ? formData.image : `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/banners/${formData.image}`}
+                  src={formData.image.startsWith('http') ? formData.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/banners/${formData.image}`}
                   alt="preview" className="w-20 h-10 object-cover rounded border"
                   onError={(e) => e.currentTarget.style.display = 'none'}
                 />

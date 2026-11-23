@@ -109,16 +109,11 @@ export default function ProductsPage() {
                           <TableCell>
                             <div className="w-10 h-10 rounded-md overflow-hidden bg-zinc-100 flex items-center justify-center border">
                               <img 
-                                src={product.image ? (product.image.startsWith('http') ? product.image : `${process.env.NEXT_PUBLIC_API_URL}/frontend/images/products/${product.image}`) : '/logo.png'} 
+                                src={product.image ? (product.image.startsWith('http') ? product.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/products/${product.image}`) : '/logo.png'} 
                                 alt={product.title} 
                                 className="object-cover w-full h-full" 
                                 onError={(e) => {
-                                  if (!e.currentTarget.dataset.retried && product.image && !product.image.startsWith('http')) {
-                                    e.currentTarget.dataset.retried = "true";
-                                    e.currentTarget.src = `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/products/${product.image}`;
-                                  } else {
-                                    e.currentTarget.src = '/logo.png';
-                                  }
+                                  e.currentTarget.src = '/logo.png';
                                 }} 
                               />
                             </div>

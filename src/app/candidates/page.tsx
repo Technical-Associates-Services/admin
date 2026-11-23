@@ -120,7 +120,7 @@ export default function CandidatesPage() {
               <div className="pt-4 border-t border-border">
                 <p className="text-sm text-muted-foreground mb-2">Resume / CV File</p>
                 {selected.resume ? (
-                  <a href={`https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/candidates/${selected.resume}`} target="_blank" className="inline-flex items-center gap-2 text-blue-500 hover:underline">
+                  <a href={`${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/candidates/${selected.resume}`} target="_blank" className="inline-flex items-center gap-2 text-blue-500 hover:underline">
                     <FileText className="h-4 w-4" /> Download Resume
                   </a>
                 ) : <p className="text-sm text-muted-foreground">No resume uploaded.</p>}

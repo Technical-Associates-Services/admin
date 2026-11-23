@@ -73,18 +73,13 @@ export default function ConcernsPage() {
                     <TableRow key={item.id}>
                       <TableCell>
                         {item.image ? (
-                          <img 
-                            src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL}/frontend/images/concerns/${item.image}`) : '/logo.png'} 
-                            alt={item.title} 
-                            className="object-cover w-12 h-12 rounded" 
+                          <img
+                            src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/concerns/${item.image}`) : '/logo.png'}
+                            alt={item.title}
+                            className="object-cover w-12 h-12 rounded"
                             onError={(e) => {
-                              if (!e.currentTarget.dataset.retried && item.image && !item.image.startsWith('http')) {
-                                e.currentTarget.dataset.retried = "true";
-                                e.currentTarget.src = `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/concerns/${item.image}`;
-                              } else {
-                                e.currentTarget.src = '/logo.png';
-                              }
-                            }} 
+                              e.currentTarget.src = '/logo.png';
+                            }}
                           />
                         ) : <div className="w-12 h-12 bg-zinc-100 dark:bg-zinc-800 rounded flex items-center justify-center text-xs text-muted-foreground">N/A</div>}
                       </TableCell>
@@ -103,11 +98,11 @@ export default function ConcernsPage() {
         </Card>
       </div>
 
-      <ConcernForm 
-        isOpen={isFormOpen} 
-        onClose={() => setIsFormOpen(false)} 
-        item={selected} 
-        onSuccess={fetchItems} 
+      <ConcernForm
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        item={selected}
+        onSuccess={fetchItems}
       />
     </DashboardLayout>
   );

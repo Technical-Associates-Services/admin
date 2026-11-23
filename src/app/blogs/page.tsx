@@ -108,16 +108,11 @@ export default function BlogsPage() {
                           <TableCell>
                             <div className="w-10 h-10 rounded-md overflow-hidden bg-zinc-100 flex items-center justify-center border">
                               <img 
-                                src={blog.image ? (blog.image.startsWith('http') ? blog.image : `${process.env.NEXT_PUBLIC_API_URL}/frontend/images/blogs/${blog.image}`) : '/logo.png'} 
+                                src={blog.image ? (blog.image.startsWith('http') ? blog.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/blogs/${blog.image}`) : '/logo.png'} 
                                 alt={blog.title} 
                                 className="object-cover w-full h-full" 
                                 onError={(e) => {
-                                  if (!e.currentTarget.dataset.retried && blog.image && !blog.image.startsWith('http')) {
-                                    e.currentTarget.dataset.retried = "true";
-                                    e.currentTarget.src = `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/blogs/${blog.image}`;
-                                  } else {
-                                    e.currentTarget.src = '/logo.png';
-                                  }
+                                  e.currentTarget.src = '/logo.png';
                                 }} 
                               />
                             </div>

@@ -74,16 +74,11 @@ export default function ServicesPage() {
                       <TableCell>
                         {item.image ? (
                           <img 
-                            src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL}/frontend/images/services/${item.image}`) : '/logo.png'} 
+                            src={item.image ? (item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/media/services/${item.image}`) : '/logo.png'} 
                             alt={item.title} 
                             className="w-12 h-12 object-cover rounded" 
                             onError={(e) => {
-                              if (!e.currentTarget.dataset.retried && item.image && !item.image.startsWith('http')) {
-                                e.currentTarget.dataset.retried = "true";
-                                e.currentTarget.src = `https://ivgvdteklcqtzfusbsfh.supabase.co/storage/v1/object/public/tas_media/services/${item.image}`;
-                              } else {
-                                e.currentTarget.src = '/logo.png';
-                              }
+                              e.currentTarget.src = '/logo.png';
                             }} 
                           />
                         ) : <div className="w-12 h-12 bg-zinc-100 dark:bg-zinc-800 rounded flex items-center justify-center text-xs text-muted-foreground">N/A</div>}
